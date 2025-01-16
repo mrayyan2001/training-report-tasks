@@ -15,6 +15,11 @@ public class ContactController : Controller
         return View(new ContactMessage());  // Pass an empty model to the view
     }
 
+    public IActionResult SendMessages()
+    {
+        return View(new ContactMessage()); // Ensure there is a corresponding SendMessages.cshtml view
+    }
+
     // Action to handle form submission
     [HttpPost]
     public IActionResult SubmitForm(ContactMessage model)
@@ -42,17 +47,17 @@ public class ContactController : Controller
                     {
                         // Handle the error (optional)
                         ModelState.AddModelError("", "There was an error saving your message. Please try again.");
-                        return View("Index", model);
+                        return View("SendMessages", model);
                     }
                 }
             }
 
             // Redirect to the form again or show a success message
-            return RedirectToAction("Index");
+            return RedirectToAction("SendMessages");
         }
 
         // If the form is invalid, return the form with validation errors
-        return View("Index", model);
+        return View("SendMessages", model);
     }
 
     // Action to display all messages
